@@ -1,4 +1,4 @@
-import axios from 'axios'
+import Vue from 'vue'
 
 export default {
   state: {
@@ -28,7 +28,7 @@ export default {
     },
     GetCategories({ commit }) {
       return new Promise((resolve, reject) => {
-            axios
+          Vue.prototype.$http
               .get(`categories`)
               .then(resp => {
                 commit('setCategories', resp.data.data)
@@ -42,7 +42,7 @@ export default {
     },
     DeleteCategory({ commit }, id) {
         return new Promise((resolve, reject) => {
-            axios
+          Vue.prototype.$http
               .delete(`categories/${id}/delete`)
               .then(resp => {
                 commit('deleteCategory', id)
@@ -56,7 +56,7 @@ export default {
     },
     InsertCategory({ commit }, category) {
         return new Promise((resolve, reject) => {
-            axios
+            Vue.prototype.$http
               .post(`categories`, {data: category})
               .then(resp => {
                 commit('addCategory', resp.data.data)

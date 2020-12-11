@@ -1,4 +1,4 @@
-import axios from 'axios'
+import Vue from 'vue'
 
 export default {
   state: {
@@ -22,7 +22,7 @@ export default {
         });
       }
       return new Promise((resolve, reject) => {
-            axios
+          Vue.prototype.$http
               .get(`posts${get}`)
               .then(resp => {
                 commit('setPosts', resp.data.data)
@@ -36,7 +36,7 @@ export default {
     },
     GetSinglePost({ commit }, slug) {
         return new Promise((resolve, reject) => {
-            axios
+            Vue.prototype.$http
               .get(`posts/${slug}`)
               .then(resp => {
                 commit('setPosts', resp.data.data)
@@ -50,10 +50,9 @@ export default {
     },
     DeletePost({ commit }, id) {
         return new Promise((resolve, reject) => {
-            axios
+            Vue.prototype.$http
               .delete(`posts/${id}/delete`)
               .then(resp => {
-                // commit('postRemoved')
                 resolve(resp)
               })
               .catch(err => {
@@ -64,7 +63,7 @@ export default {
     },
     UpdatePost({ commit }, post) {
         return new Promise((resolve, reject) => {
-            axios
+            Vue.prototype.$http
               .put(`posts/${post.id}/update`, {data: post})
               .then(resp => {
                 resolve(resp)
@@ -77,7 +76,7 @@ export default {
     },
     InsertPost({ commit }, post) {
         return new Promise((resolve, reject) => {
-            axios
+            Vue.prototype.$http
               .post(`posts`, {data: post})
               .then(resp => {
                 resolve(resp)
@@ -90,7 +89,7 @@ export default {
     },
     ExportPosts({ commit }) {
         return new Promise((resolve, reject) => {
-            axios
+            Vue.prototype.$http
               .post(`posts/generate`)
               .then(resp => {
                 resolve(resp)

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import Vue from 'vue'
 
 export default {
   state: {
@@ -9,7 +9,7 @@ export default {
     login_success (state, data) {
       console.log(data)
       localStorage.setItem('auth', data.csrf_token)
-      axios.defaults.headers.common.Authorization = data.csrf_token
+      Vue.prototype.$http.defaults.headers.common.Authorization = data.csrf_token
       state.authStatus = true
       state.user = data.user
     },
@@ -18,7 +18,7 @@ export default {
     },
     logout_success (state) {
       localStorage.removeItem('auth')
-      delete axios.defaults.headers.common.Authorization
+      delete Vue.prototype.$http.defaults.headers.common.Authorization
       state.authStatus = ''
       state.user = ''
     }
@@ -26,7 +26,7 @@ export default {
   actions: {
     login ({ commit }, credentials) {
       return new Promise((resolve, reject) => {
-        axios
+        Vue.prototype.$http
           .post('/auth/login', { data: credentials })
           .then(resp => {
             commit('login_success', resp.data.data)
@@ -39,7 +39,7 @@ export default {
     },
     register ({ commit, dispatch }, user) {
       return new Promise((resolve, reject) => {
-        axios
+        Vue.prototype.$http
           .post('/auth/register', { data: user })
           .then(resp => {
             dispatch('login', user)
@@ -52,7 +52,7 @@ export default {
     },
     update ({ commit, dispatch }, user) {
       return new Promise((resolve, reject) => {
-        axios
+        Vue.prototype.$http
           .put(`/users/${user.id}/update`, { data: user })
           .then(resp => {
             commit('update_success', user)
@@ -65,7 +65,7 @@ export default {
     },
     delete ({ commit, dispatch }, id) {
       return new Promise((resolve, reject) => {
-        axios
+        Vue.prototype.$http
         .delete(`users/${id}/delete`)
           .then(resp => {
             commit('logout_success')
@@ -78,7 +78,7 @@ export default {
     },
     logout ({ commit }) {
       return new Promise((resolve, reject) => {
-        axios
+        Vue.prototype.$http
           .post('/auth/logout')
           .then(resp => {
             commit('logout_success')
