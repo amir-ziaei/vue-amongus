@@ -40,10 +40,28 @@ const routes = [
       import(/* webpackChunkName: "contact" */ "../views/Contact.vue")
   },
   {
-    path: "/article/:slug",
+    path: "/articles/:slug",
     name: "Article",
     component: () =>
       import(/* webpackChunkName: "article" */ "../views/Article.vue")
+  },
+  {
+    path: "/articles/:slug/edit",
+    name: "ArticleEdit",
+    component: () =>
+      import(/* webpackChunkName: "article-edit" */ "../views/ArticleEdit.vue")
+  },
+  {
+    path: "/articles/new",
+    name: "ArticleNew",
+    component: () =>
+      import(/* webpackChunkName: "article-new" */ "../views/ArticleNew.vue")
+  },
+  {
+    path: "/users/:id/edit",
+    name: "Dashboard",
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue")
   }
 ];
 
