@@ -84,8 +84,12 @@ export default {
 </script>
 
 <style scoped>
-#form * {
+* {
     outline: none;
+}
+
+input:focus {
+  border-color: #ccc;
 }
 
 .form-group {
