@@ -6,13 +6,13 @@
     <div class="container">
         <form @submit.prevent="submit">
             <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
-              <label class="form__label">Email</label>
+              <label class="form__label">Email *</label>
               <input class="form__input" v-model.trim="$v.email.$model"/>
             </div>
             <div class="error" v-if="!$v.email.required">Email is required</div>
             <div class="error" v-if="!$v.email.email">Email looks invalid</div>
             <div class="form-group" :class="{ 'form-group--error': $v.name.$error }">
-                <label class="form__label">Name</label>
+                <label class="form__label">Name *</label>
                 <input class="form__input" v-model.trim="$v.name.$model"/>
             </div>
             <div class="error" v-if="!$v.name.required">Name is required</div>
@@ -20,7 +20,7 @@
             <div class="error" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} characters</div>
             <div class="error" v-if="!$v.name.maxLength">Name must have less than {{$v.name.$params.maxLength.max}} characters</div>
             <div class="form-group" :class="{ 'form-group--error': $v.password.$error }">
-                <label class="form__label">Password</label>
+                <label class="form__label">Password *</label>
                 <input class="form__input" v-model.trim="$v.password.$model" type="password"/>
             </div>
             <div class="error" v-if="!$v.password.required">Password is required</div>
@@ -105,8 +105,12 @@ export default {
 </script>
 
 <style scoped>
-#form * {
+* {
     outline: none;
+}
+
+input:focus {
+  border-color: #ccc;
 }
 
 .form-group {
