@@ -29,15 +29,16 @@ Vue.component('vue-headful', vueHeadful)
 Vue.use(Vuelidate)
 Vue.use(Notifications)
 
-axios.defaults.baseURL = `http://localhost:8888/api/v1/`;
-Vue.prototype.$http = axios;
+Vue.prototype.$http = axios.create({
+  baseURL: 'http://localhost:8888/api/v1/'
+})
 
 const auth = localStorage.getItem('auth')
 if (auth) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] = auth
 }
 
-axios.interceptors.response.use(res => {
+Vue.prototype.$http.interceptors.response.use(res => {
   return res;
 }, err => {
   if (err.response.status === 401 && err.response.config && !err.response.config.__isRetryRequest) {
