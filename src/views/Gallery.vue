@@ -31,7 +31,37 @@ export default {
   name: "Gallery",
   data() {
     return {
-      cats: storage.cats
+      cats: [
+        {
+          id: 1,
+          name: 'All',
+          color: '#2c3e50',
+          is_enabled: true
+        },
+        {
+          id: 2,
+          name: 'Nature',
+          color: '#4f27dd',
+          is_enabled: false
+        },
+        {
+          id: 3,
+          name: 'Animals',
+          color: '#f14c4c',
+          is_enabled: false
+        },
+        {
+          id: 4,
+          name: 'Cars',
+          color: '#3fc380',
+          is_enabled: false
+        },
+        {
+          id: 5,
+          name: 'People',
+          color: '#f1c40f',
+          is_enabled: false
+        }]
     }
   },
   components: {
