@@ -18,7 +18,8 @@
             <b>Number of Posts: </b> {{ countArticles }} <br/>
             <b>Number of Posts by Me: </b> {{ countArticlesByMe }} <br/>
             <b>Number of Posts in 2020: </b> {{ countArticlesInSpecificYear(2020) }} <br/>
-            <b>Number of Posts in 2019: </b> {{ countArticlesInSpecificYear(2019) }}
+            <b>Number of Posts in 2019: </b> {{ countArticlesInSpecificYear(2019) }} <br/>
+            <b>Number of Posts in 2018: </b> {{ countArticlesInSpecificYear(2018) }}
           </div>
         </header>
         <TheSearch 
