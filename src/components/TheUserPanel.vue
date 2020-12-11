@@ -5,13 +5,13 @@
         <img src="../assets/logo.png" width="35" height="35" alt="Avatar" title="Amir's Avatar" draggable="false" />
       </div>
       <div>
-        <span>{{ User.name }}</span> | 
+        <router-link class="username" :to="{name: 'Dashboard', params:{ id: User.id }}">{{ User.name }}</router-link> |
         <a @click="logout">Logout</a>
       </div>
     </div>
     <div v-else class="guest">
-      <router-link to="/register" class="link signup">Sign Up</router-link>
-      <router-link to="/login" class="link login">Log In</router-link>
+      <router-link :to="{name: 'Register'}" class="link signup">Sign Up</router-link>
+      <router-link :to="{name: 'Login'}" class="link login">Log In</router-link>
     </div>
   </div>
 </template>
@@ -37,6 +37,10 @@ export default {
 </script>
 
 <style scoped>
+a {
+  cursor: pointer;
+}
+
 #userpanel {
   display: flex;
   align-items: center;
@@ -47,23 +51,20 @@ export default {
   border-radius: 50%;
 }
 
-#userpanel span {
+#userpanel .username {
   font-size: 1rem;
   padding-left: 0.5rem;
   font-weight: bold;
+  color:#000;
+}
+
+#userpanel .username:hover {
+  color:rgb(57, 161, 116);
 }
 
 .guest, .user {
   display: flex;
   align-items: center;
-}
-
-.link {
-  background-color: gray;
-  padding:0.4rem 0.75rem;
-  margin: 0.35rem 0.25rem;
-  border-radius:4px;
-  font-size:0.75rem;
 }
 
 .login {
@@ -82,6 +83,5 @@ export default {
 
 .signup:hover {
   background-color: rgb(57, 161, 116, 0.9);
-  color:#fff;
 }
 </style>
