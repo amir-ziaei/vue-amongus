@@ -5,6 +5,10 @@ import VueRouter from "vue-router";
 import store from "../store/index";
 import Home from "../views/Home.vue";
 
+import guest from './middleware/guest'
+import auth from './middleware/auth'
+import middlewarePipeline from './middlewarePipeline'
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -18,14 +22,14 @@ const routes = [
     name: "Register",
     component: () =>
       import(/* webpackChunkName: "register" */ "../views/Register.vue"),
-    meta: { guest: true }
+    meta: { middleware: [guest] }
   },
   {
     path: "/login",
     name: "Login",
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Login.vue"),
-    meta: { guest: true }
+      meta: { middleware: [guest] }
   },
   {
     path: "/gallery",
@@ -40,6 +44,13 @@ const routes = [
       import(/* webpackChunkName: "contact" */ "../views/Contact.vue")
   },
   {
+    path: "/articles/new/",
+    name: "ArticleNew",
+    component: () =>
+      import(/* webpackChunkName: "article-new" */ "../views/ArticleNew.vue"),
+      meta: { middleware: [auth] }
+  },
+  {
     path: "/articles/:slug",
     name: "Article",
     component: () =>
@@ -49,19 +60,15 @@ const routes = [
     path: "/articles/:slug/edit",
     name: "ArticleEdit",
     component: () =>
-      import(/* webpackChunkName: "article-edit" */ "../views/ArticleEdit.vue")
-  },
-  {
-    path: "/articles/new",
-    name: "ArticleNew",
-    component: () =>
-      import(/* webpackChunkName: "article-new" */ "../views/ArticleNew.vue")
+      import(/* webpackChunkName: "article-edit" */ "../views/ArticleEdit.vue"),
+      meta: { middleware: [auth] }
   },
   {
     path: "/users/:id/edit",
     name: "Dashboard",
     component: () =>
-      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue")
+      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue"),
+      meta: { middleware: [auth] }
   }
 ];
 
@@ -71,39 +78,20 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next();
-      return;
-    }
-    next("/login");
-  } else {
-    next();
+  if (!to.meta.middleware) {
+      return next()
   }
-});
-
-// router.beforeEach((to, from, next) => {
-//   if(to.matched.some(record => record.meta.requiresAuth)) {
-//     if (store.getters.isAuthenticated) {
-//       next()
-//       return
-//     }
-//     next('/login')
-//   } else {
-//     next()
-//   }
-// });
-
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some((record) => record.meta.guest)) {
-//     if (store.getters.isAuthenticated) {
-//       next("/");
-//       return;
-//     }
-//     next();
-//   } else {
-//     next();
-//   }
-// });
+  const middleware = to.meta.middleware
+  const context = {
+      to,
+      from,
+      next,
+      store
+  }
+  return middleware[0]({
+      ...context,
+      next: middlewarePipeline(context, middleware, 1)
+  })
+})
 
 export default router;
