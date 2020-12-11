@@ -16,15 +16,6 @@ export default {
   components: {
     TheTopbar,
     TheFooter
-  },
-  computed: {
-    isLoggedIn : function(){ return this.$store.getters.isLoggedIn },
-    isExpired : function(){ return this.$store.getters.isExpired }
-  },
-  created: function() {
-    if(this.isLoggedIn && this.isExpired) {
-      this.$store.dispatch('logout');
-    }
   }
 };
 </script>
@@ -96,5 +87,14 @@ body {
 
 .form-alerts.success {
   background: #68CD86;
+}
+
+.link {
+  background-color: #808080;
+  padding:0.4rem 0.75rem;
+  margin: 0.35rem 0.25rem;
+  border-radius:4px;
+  font-size:0.75rem;
+  cursor: pointer;
 }
 </style>
