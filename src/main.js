@@ -9,6 +9,17 @@ import Vuelidate from 'vuelidate'
 import Notifications from 'vue-notification'
 import store from './store/index'
 import axios from 'axios'
+import VueHtmlToPaper from "vue-html-to-paper";
+
+const options = {
+  name: "_blank",
+  specs: ["fullscreen=yes", "titlebar=yes", "scrollbars=yes"],
+  styles: [
+    "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css",
+    "https://unpkg.com/kidlat-css/css/kidlat.css"
+  ]
+};
+Vue.use(VueHtmlToPaper, options);
 
 library.add(faBars, faMap)
 
@@ -18,24 +29,23 @@ Vue.component('vue-headful', vueHeadful)
 Vue.use(Vuelidate)
 Vue.use(Notifications)
 
-axios.defaults.baseURL = 'http://localhost:8888/api/v1/'
+axios.defaults.baseURL = `http://localhost:8888/api/v1/`;
 Vue.prototype.$http = axios;
 
-const token = localStorage.getItem('token')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
+const auth = localStorage.getItem('auth')
+if (auth) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = auth
 }
 
-// Vue.prototype.$http.interceptors.response.use(undefined, function (err) {
-//   return new Promise(function () {
-//     if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-//       console.log(this.$store);
-//       this.$store.dispatch('logout')
-//       return router.push('/login')
-//     }
-//     return Promise.reject(err.response);
-//   });
-// });
+axios.interceptors.response.use(res => {
+  return res;
+}, err => {
+  if (err.response.status === 401 && err.response.config && !err.response.config.__isRetryRequest) {
+      store.dispatch('logout')
+      return router.push('/login')
+  }
+  throw err.response.data.message
+});
 
 Vue.config.productionTip = false
 
