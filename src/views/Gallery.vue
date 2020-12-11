@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import storage from "@/storage.js";
 import GalleryCat from "@/components/GalleryCat.vue";
 
 export default {
