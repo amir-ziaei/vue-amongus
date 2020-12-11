@@ -1,9 +1,9 @@
 <template>
    <footer id="footer">
       <small>&copy; Copyright 2020, Amirhossein Ziaei R.</small>
-      <a href="" target="_blank">
+      <a :href="require(`@/assets/structure.png`)" target="_blank">
         <font-awesome-icon icon="map"/>
-        </a>
+      </a>
     </footer>
 </template>
 
