@@ -1,8 +1,9 @@
 <template>
-    <article class="container article">
+    <div>
+      <article class="article">
         <header>
             <router-link :to="{ name: 'Article', params: { slug: slug } }">
-                <img :src="require(`@/assets/${thumbnail}`)" width="150" height="150" alt="Article Thumbnail" :title="title" />
+                <img :src="thumbnail" width="150" height="150" alt="Article Thumbnail" :title="title" />
             </router-link>
         </header>
         <main>
@@ -20,25 +21,30 @@
         </main>
         <footer>
             <p>
-              Written by <a href="#">{{ author }}</a>
+              Written by <a href="#">{{ author.name }}</a>
             </p>
             <span>{{dateDiff}}</span>
         </footer>
-    </article>
+      </article>
+    </div>
 </template>
 
 <script>
 export default {
     name: "ArticlePreview",
     props: {
+      id: Number,
       title: String,
       slug: String,
       body: String,
-      thumbnail: String,
-      author: String,
+      author: undefined,
       published_at: String,
     },
     computed: {
+      thumbnail() {
+        const imgId = (this.id%4) + 1;
+        return require(`@/assets/crew${imgId}.png`)
+      },
       dateDiff() {
         const publishedDate = new Date(this.published_at);
         const m = new Date();
@@ -78,6 +84,20 @@ export default {
 </script>
 
 <style scoped>
+div {
+  flex-basis: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  padding:0.3rem;
+  box-sizing: border-box;
+}
+
+.article {
+  background: #fff;
+  border-radius: 5px;
+  padding:1rem;
+}
+
 .article header {
   display: flex;
   justify-content: center;
