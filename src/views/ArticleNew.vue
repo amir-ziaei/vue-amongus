@@ -33,7 +33,12 @@ export default {
           this.categories = this.$store.getters.StateCategories;
         })
         .catch(err => {
-          this.error = true;
+          this.$notify({
+                group: 'form-alerts',
+                type: 'error',
+                text: 'Failed to get categories',
+                duration: 2000,
+            });
         })
     },
     methods: {
