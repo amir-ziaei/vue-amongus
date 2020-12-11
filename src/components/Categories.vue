@@ -5,11 +5,13 @@
         </header>
         <div v-bind:class="{'row cat-holder': view == 'horizontal'}">
             <div v-bind:class="{'reverse': view == 'horizontal'}" >
-                <form v-on:submit.prevent v-on:change="emit" v-bind:class="{'reverse': view == 'horizontal'}" autocomplete="off">
-                    <div class="checkbox-group" v-for="category in categories" :key="category.id">
-                        <span @click="deleteCat(category.id)" v-if="modifyMode">❌</span>
-                        <input v-else :id="category.title" type="checkbox" :value="category.id" v-model="cat">
-                        <label :for="category.title" class="form__label">{{ category.title }}</label>
+                <form v-on:submit.prevent v-on:change="emit" autocomplete="off">
+                    <div v-bind:class="{'wrap': view == 'horizontal'}">
+                        <div class="checkbox-group" v-for="category in categories" :key="category.id">
+                            <span @click="deleteCat(category.id)" v-if="modifyMode">❌</span>
+                            <input v-else :id="category.title" type="checkbox" :value="category.id" v-model="cat">
+                            <label :for="category.title" class="form__label">{{ category.title }}</label>
+                        </div>
                     </div>
                     <div v-if="modifyMode">
                         <input placeholder="New Category" class="form__input" v-model="category" />
@@ -91,8 +93,8 @@ header label {
     display: flex;
 }
 
-.reverse {
-    flex-direction: row-reverse;
+.wrap {
+    flex-wrap: wrap;
     display: flex;
 }
 
