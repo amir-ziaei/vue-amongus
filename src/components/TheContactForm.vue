@@ -2,24 +2,24 @@
     <form id="form" @submit.prevent="submit">
         <div class="form-group" :class="{ 'form-group--error': $v.name.$error }">
             <label class="form__label">Name</label>
-            <input class="form__input" v-model.trim="$v.name.$model"/>
+            <input data-cy="name" class="form__input" v-model.trim="$v.name.$model"/>
         </div>
         <div class="error" v-if="!$v.name.required">Name is required</div>
         <div class="error" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
         <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
             <label class="form__label">Email</label>
-            <input class="form__input" v-model.trim="$v.email.$model"/>
+            <input data-cy="email" class="form__input" v-model.trim="$v.email.$model"/>
         </div>
         <div class="error" v-if="!$v.email.required">Email is required</div>
         <div class="error" v-if="!$v.email.email">Email is invalid</div>
         <div class="form-group" :class="{ 'form-group--error': $v.msg.$error }">
             <label class="form__label">Message</label>
-            <textarea class="form__input form__textarea" v-model.trim="$v.msg.$model"></textarea>
+            <textarea data-cy="message" class="form__input form__textarea" v-model.trim="$v.msg.$model"></textarea>
         </div>
         <div class="error" v-if="!$v.msg.required">Message is required</div>
         <div class="error" v-if="!$v.msg.minLength">Message must have at least {{$v.msg.$params.minLength.min}} letters.</div>
         <div class="form-group">
-            <button class="reset" @click="reset">Reset</button>
+            <button data-cy="reset" class="reset" @click="reset">Reset</button>
             <button class="submit" type="submit">Submit</button>
         </div>
     </form>

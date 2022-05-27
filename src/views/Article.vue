@@ -23,8 +23,10 @@
                 </p>
             </main>
             <footer class="footer" v-if="isModificationAllowed">
-                <router-link :to="{name: 'ArticleEdit' , params:{ slug: article.slug }}" class="link edit">Edit</router-link> 
-                <a @click="deleteArticle" class="link delete">Delete</a>
+                <router-link :to="{name: 'ArticleEdit' , params:{ slug: article.slug }}" class="link edit" data-cy="edit">
+                    Edit
+                </router-link> 
+                <a data-cy="delete" @click="deleteArticle" class="link delete">Delete</a>
             </footer>
         </div>
     </div>

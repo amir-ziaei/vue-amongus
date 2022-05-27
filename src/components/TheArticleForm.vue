@@ -2,13 +2,13 @@
     <form @submit.prevent="submit">
         <div class="form-group" :class="{ 'form-group--error': $v.title.$error }">
             <label class="form__label">Title</label>
-            <input class="form__input" v-model.trim="$v.title.$model"/>
+            <input data-cy="title" class="form__input" v-model.trim="$v.title.$model"/>
         </div>
         <div class="error" v-if="!$v.title.required">Title is required</div>
         <div class="error" v-if="!$v.title.minLength">Title must have at least {{$v.title.$params.minLength.min}} characters</div>
         <div class="form-group" :class="{ 'form-group--error': $v.slug.$error }">
             <label class="form__label">Slug</label>
-            <input class="form__input" v-model.trim="$v.slug.$model"/>
+            <input data-cy="slug" class="form__input" v-model.trim="$v.slug.$model"/>
         </div>
         <div class="error" v-if="!$v.slug.required">Slug is required</div>
         <div class="error" v-if="!$v.slug.alpha_dash">Slug can only contain alpha, numbers, and dashes</div>
@@ -30,11 +30,11 @@
             v-on:category-deleted="deleteCategory" />
         <div class="form-group" :class="{ 'form-group--error': $v.body.$error }">
             <label class="form__label">Body</label>
-            <textarea rows="10" class="form__input" v-model.trim="$v.body.$model"></textarea>
+            <textarea data-cy="body" rows="10" class="form__input" v-model.trim="$v.body.$model"></textarea>
         </div>
         <div class="error" v-if="!$v.body.required">Body is required</div>
         <div class="form-group">
-            <button class="submit" type="submit">{{ buttonName }}</button>
+            <button data-cy="submit" class="submit" type="submit">{{ buttonName }}</button>
         </div>
     </form>
 </template>

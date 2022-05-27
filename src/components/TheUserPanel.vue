@@ -6,7 +6,7 @@
       </div>
       <div>
         <router-link class="username" :to="{name: 'Dashboard', params:{ id: User.id }}">{{ User.name }}</router-link> |
-        <a @click="logout">Logout</a>
+        <a data-cy="logout" @click="logout">Logout</a>
       </div>
     </div>
     <div v-else class="guest">

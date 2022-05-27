@@ -131,7 +131,7 @@ export default {
     exportToFile() {
       this.$store.dispatch('ExportPosts')
       .then(resp => {
-        window.open(`http://localhost:8888/public/reports/${resp.data.data}`);
+        window.open(`http://localhost/public/reports/${resp.data.data}`);
       })
     },
     applyFilter(searchParams) {
